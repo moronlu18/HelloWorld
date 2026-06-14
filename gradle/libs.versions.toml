@@ -22,5 +22,4 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
-[bundles]
 
