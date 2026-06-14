@@ -108,14 +108,6 @@ Ejemplo: `https://moronlu18.github.io/HelloWorld/`
 
 ## 6. Solución de Problemas
 
-### Error: "Failed to deploy - Jekyll"
-
-**Causa:** GitHub Pages intenta procesar con Jekyll.
-
-**Solución:**
-1. Añadir archivo `.nojekyll` en la raíz del proyecto
-2. Verificar que `docs/` contiene `index.html`
-
 ### Error: "Validation Failed (422)"
 
 **Causa:** GitHub Pages no está habilitado o mal configurado.
