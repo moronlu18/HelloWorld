@@ -8,6 +8,9 @@ material = "1.8.0"
 constraintlayout = "2.1.4"
 kotlin = "1.9.24"
 core-ktx = "1.13.1"
+dokka = "1.9.20"
+google-services = "4.4.2"
+firebase-crashlytics = "2.9.9"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -17,9 +20,13 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.0
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+dokka-android-documentation = { group = "org.jetbrains.dokka", name = "android-documentation-plugin", version.ref = "dokka" }
+dokka-mathjax = { group = "org.jetbrains.dokka", name = "mathjax-plugin", version.ref = "dokka" }
+dokka-kotlin-java = { group = "org.jetbrains.dokka", name = "kotlin-as-java-plugin", version.ref = "dokka" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
-
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }

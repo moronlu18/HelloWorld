@@ -1,10 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("org.jetbrains.dokka")
-    id("com.google.gms.google-services")
-    // Add the Crashlytics Gradle plugin
-    id("com.google.firebase.crashlytics")
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -61,13 +60,13 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     //Librería para documentar con Dokka
-    dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.9.20")
+    dokkaPlugin(libs.dokka.android.documentation)
     // Is applied universally
-    dokkaPlugin("org.jetbrains.dokka:mathjax-plugin:1.9.20")
+    dokkaPlugin(libs.dokka.mathjax)
     // Is applied for the single-module dokkaHtml task only
-    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.9.20")
+    dokkaHtmlPlugin(libs.dokka.kotlin.java)
     // Is applied for HTML format in multi-project builds
-    dokkaHtmlPartialPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.9.20")
+    dokkaHtmlPartialPlugin(libs.dokka.kotlin.java)
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))

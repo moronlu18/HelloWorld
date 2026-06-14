@@ -5,10 +5,9 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
-    id("org.jetbrains.dokka") version "1.9.20"
-    id("com.google.gms.google-services") version "4.4.2" apply false
-    // Add the dependency for the Crashlytics Gradle plugin
-    id("com.google.firebase.crashlytics") version "2.9.9" apply false
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
 }
 
 tasks.withType<DokkaTask>().configureEach {
@@ -24,8 +23,6 @@ tasks.withType<DokkaTask>().configureEach {
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
+        classpath(libs.dokka.android.documentation)
     }
 }
-
-
