@@ -32,8 +32,7 @@ jobs:
           SIDEBAR_CONTENT="Home"
           while IFS= read -r line; do
             heading=$(echo "$line" | sed 's/^#* *//')
-            SIDEBAR_CONTENT="${SIDEBAR_CONTENT}
-${heading}"
+            SIDEBAR_CONTENT+=$'\n'"${heading}"
           done < <(grep -E "^#{1,3} " README.md)
           
           echo "$SIDEBAR_CONTENT" > wiki-content/_Sidebar.md
