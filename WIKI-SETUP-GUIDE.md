@@ -1,5 +1,7 @@
 # Guía: Configuración de Wiki con GitHub Actions
 
+> **Ver también:** [README.md](README.md) | [GITHUB-PAGES-SETUP-GUIDE.md](GITHUB-PAGES-SETUP-GUIDE.md)
+
 ## Índice
 
 1. [Resumen](#1-resumen)
@@ -13,7 +15,7 @@
 
 ## 1. Resumen
 
-Automatización que sincroniza el `README.md` con la **Wiki de GitHub**:
+Automatización que sincroniza el [`README.md`](README.md) con la **Wiki de GitHub**:
 - Crea `Home.md` desde el README
 - Genera `_Sidebar.md` con los headings del README
 - Copia imágenes de la carpeta `img/`
@@ -22,8 +24,9 @@ Automatización que sincroniza el `README.md` con la **Wiki de GitHub**:
 
 ## 2. Prerequisitos
 
-- Repositorio en GitHub con el README.md actualizado
+- Repositorio en GitHub con el [`README.md`](README.md) actualizado
 - Permisos de administrador en el repositorio
+- Wiki habilitada (ver paso 3.1)
 
 ---
 
@@ -35,6 +38,8 @@ Automatización que sincroniza el `README.md` con la **Wiki de GitHub**:
 2. **Settings** → **General**
 3. **Features** → Marcar **Wikis**
 4. **Save**
+
+> **Nota:** La wiki debe tener al menos una página creada desde el navegador para que el endpoint `.wiki.git` esté disponible.
 
 ### 3.2. Crear Token de Acceso Personal (PAT)
 
@@ -60,7 +65,7 @@ Automatización que sincroniza el `README.md` con la **Wiki de GitHub**:
 ## 4. Workflow de sincronización
 
 El workflow `sync-wiki.yml` se ejecuta automáticamente cuando:
-- Se hace push a `main` con cambios en `README.md`
+- Se hace push a `main` con cambios en [`README.md`](README.md)
 - Se ejecuta manualmente desde **Actions**
 
 ### 4.1. Contenido del workflow
@@ -102,8 +107,7 @@ jobs:
           SIDEBAR_CONTENT="Home"
           while IFS= read -r line; do
             heading=$(echo "$line" | sed 's/^#* *//')
-            SIDEBAR_CONTENT="${SIDEBAR_CONTENT}
-${heading}"
+            SIDEBAR_CONTENT+=$'\n'"${heading}"
           done < <(grep -E "^#{1,3} " README.md)
           
           echo "$SIDEBAR_CONTENT" > wiki-content/_Sidebar.md
@@ -117,9 +121,15 @@ ${heading}"
             exit 1
           fi
           
-          WIKI_URL="https://x-access-token:${WIKI_TOKEN}@github.com/${{ github.repository }}.wiki.git"
+          echo "=== Setting up git ==="
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global credential.helper store
           
-          git clone "$WIKI_URL" wiki-repo
+          echo "https://${WIKI_TOKEN}@github.com" > ~/.git-credentials
+          
+          echo "=== Cloning wiki ==="
+          git clone https://github.com/${{ github.repository }}.wiki.git wiki-repo
           cd wiki-repo
           
           # Delete everything
@@ -129,8 +139,10 @@ ${heading}"
           # Copy new content
           cp -r ../wiki-content/* .
           
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "=== Files to upload ==="
+          ls -la
+          
+          echo "=== Pushing to wiki ==="
           git add .
           git commit -m "docs: update wiki"
           git push
@@ -144,13 +156,13 @@ ${heading}"
 
 | Archivo | Contenido |
 |---------|-----------|
-| `Home.md` | Contenido completo del README.md |
-| `_Sidebar.md` | Menú lateral con los headings (H1, H2, H3) |
+| `Home.md` | Contenido completo del [`README.md`](README.md) |
+| `_Sidebar.md` | Menú lateral con los headings del README |
 | `img/` | Imágenes copiadas del repositorio |
 
 ### 5.2. Sidebar generado
 
-El sidebar se genera automáticamente a partir de los headings del README:
+El sidebar se genera automáticamente a partir de los headings del [`README.md`](README.md):
 
 ```markdown
 Home
@@ -179,6 +191,15 @@ Licencia
 2. Verificar que el nombre del secreto es exactamente `WIKI_TOKEN`
 3. Generar un nuevo token si expiró
 
+### Error: "Repository not found"
+
+**Causa:** La wiki no está habilitada o no tiene páginas creadas.
+
+**Solución:**
+1. Habilitar Wiki en Settings → General → Features
+2. Crear al menos una página desde el navegador
+3. Verificar que el token tiene permiso **`repo`**
+
 ### Error: "Permission denied"
 
 **Causa:** El token no tiene permisos suficientes.
@@ -199,7 +220,7 @@ Licencia
 
 ### Sidebar muestra contenido incorrecto
 
-**Causa:** El README tiene un formato inesperado.
+**Causa:** El [`README.md`](README.md) tiene un formato inesperado.
 
 **Solución:**
 1. Verificar que los headings del README usan `#`, `##` o `###`
@@ -211,7 +232,7 @@ Licencia
 
 **Solución:**
 1. Verificar que las imágenes están en `img/`
-2. Verificar que el README referencia las imágenes correctamente
+2. Verificar que el [`README.md`](README.md) referencia las imágenes correctamente
 
 ---
 
@@ -234,3 +255,7 @@ git push origin main
 
 **Autor:** Lourdes Rodríguez Morón
 **Fecha:** Junio 2026
+
+> **Documentación relacionada:**
+> - [README.md](README.md) - Documentación principal del proyecto
+> - [GITHUB-PAGES-SETUP-GUIDE.md](GITHUB-PAGES-SETUP-GUIDE.md) - Guía para GitHub Pages con Dokka
