@@ -3,4 +3,5 @@
     <string name="tvMessageStartText">Hola Mundo</string>
     <string name="tvMessageEndText">MUY Cruel</string>
     <string name="messageOptimist">En este maravilloso día</string>
+    <string name="btCrash">Esto es un fallo</string>
 </resources>
