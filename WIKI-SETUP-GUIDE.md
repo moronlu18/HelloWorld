@@ -176,19 +176,19 @@ jobs:
 
 ### 5.2. Sidebar generado
 
-El sidebar se genera automáticamente con enlaces a las secciones del [`README.md`](README.md):
+El sidebar se genera automáticamente con enlaces a las secciones del [`README.md`](README.md). Los anchors se convierten a formato GitHub Wiki (minúsculas, guiones, sin acentos):
 
 ```markdown
 * [Home](Home)
 * [Contenidos Aprendidos](Home#contenidos-aprendidos)
-* [Instalación y configuración](Home#instalación-y-configuración)
-* [Ejecución](Home#ejecución)
+* [Instalación y configuración](Home#instalacion-y-configuracion)
+* [Ejecución](Home#ejecucion)
 * [Estructura del proyecto](Home#estructura-del-proyecto)
-* [Documentación](Home#documentación)
+* [Documentación](Home#documentacion)
 * [GitHub Actions](Home#github-actions)
-* [Imagen de la Aplicación](Home#imagen-de-la-aplicación)
+* [Imagen de la Aplicación](Home#imagen-de-la-aplicacion)
 * [Autora](Home#autora)
-* [Versión](Home#versión)
+* [Versión](Home#version)
 * [Licencia](Home#licencia)
 ```
 
