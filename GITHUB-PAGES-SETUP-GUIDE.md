@@ -1,5 +1,7 @@
 # Guía: Configuración de GitHub Pages con Dokka
 
+> **Ver también:** [README.md](README.md) | [WIKI-SETUP-GUIDE.md](WIKI-SETUP-GUIDE.md)
+
 ## Índice
 
 1. [Resumen](#1-resumen)
@@ -42,7 +44,11 @@ La documentación se genera localmente con `./gradlew dokkaHtml` y se despliega 
 
 ## 4. Generar documentación Dokka
 
-**Paso obligatorio antes del despliegue.** La documentación debe existir en la carpeta `docs/` antes de hacer push.
+<div style="background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 16px; margin: 16px 0;">
+
+> ⚠️ **IMPORTANTE:** La documentación Dokka debe generarse **localmente** antes de hacer push. El workflow solo despliega lo que existe en la carpeta `docs/`. Si no ejecutas `./gradlew dokkaHtml` antes del push, no se desplegará nada.
+
+</div>
 
 ### 4.1. Generar localmente
 
@@ -161,3 +167,7 @@ git push origin main
 
 **Autor:** Lourdes Rodríguez Morón
 **Fecha:** Junio 2026
+
+> **Documentación relacionada:**
+> - [README.md](README.md) - Documentación principal del proyecto
+> - [WIKI-SETUP-GUIDE.md](WIKI-SETUP-GUIDE.md) - Guía para Wiki con GitHub Actions

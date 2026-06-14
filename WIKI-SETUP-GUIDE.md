@@ -17,7 +17,7 @@
 
 Automatización que sincroniza el [`README.md`](README.md) con la **Wiki de GitHub**:
 - Crea `Home.md` desde el README
-- Genera `_Sidebar.md` con los headings del README
+- Genera `_Sidebar.md` con enlaces a las secciones del README
 - Copia imágenes de la carpeta `img/`
 
 ---
@@ -39,7 +39,19 @@ Automatización que sincroniza el [`README.md`](README.md) con la **Wiki de GitH
 3. **Features** → Marcar **Wikis**
 4. **Save**
 
-> **Nota:** La wiki debe tener al menos una página creada desde el navegador para que el endpoint `.wiki.git` esté disponible.
+<div style="background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 16px; margin: 16px 0;">
+
+> ⚠️ **IMPORTANTE:** Antes de ejecutar el workflow `sync-wiki.yml`, debes crear **al menos una página** desde el navegador de GitHub Wiki. Si no lo haces, el endpoint `.wiki.git` no estará disponible y el workflow fallará con el error "Repository not found".
+
+**Pasos:**
+1. Ve a la Wiki de tu repositorio: `https://github.com/usuario/repo/wiki`
+2. Haz clic en **"Create the first page"**
+3. Escribe cualquier contenido (por ejemplo, "Página inicial")
+4. Haz clic en **"Save Page"**
+
+Una vez creada la primera página, el workflow podrá clonar y actualizar la Wiki.
+
+</div>
 
 ### 3.2. Crear Token de Acceso Personal (PAT)
 
@@ -103,11 +115,13 @@ jobs:
             cp -r img/* wiki-content/img/ 2>/dev/null || true
           fi
           
-          # Create _Sidebar.md from README headings
-          SIDEBAR_CONTENT="Home"
+          # Create _Sidebar.md with links to sections
+          SIDEBAR_CONTENT="* [Home](Home)"
           while IFS= read -r line; do
             heading=$(echo "$line" | sed 's/^#* *//')
-            SIDEBAR_CONTENT+=$'\n'"${heading}"
+            anchor=$(echo "$heading" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+            SIDEBAR_CONTENT="${SIDEBAR_CONTENT}
+* [${heading}](Home#${anchor})"
           done < <(grep -E "^#{1,3} " README.md)
           
           echo "$SIDEBAR_CONTENT" > wiki-content/_Sidebar.md
@@ -157,25 +171,25 @@ jobs:
 | Archivo | Contenido |
 |---------|-----------|
 | `Home.md` | Contenido completo del [`README.md`](README.md) |
-| `_Sidebar.md` | Menú lateral con los headings del README |
+| `_Sidebar.md` | Menú lateral con enlaces a las secciones |
 | `img/` | Imágenes copiadas del repositorio |
 
 ### 5.2. Sidebar generado
 
-El sidebar se genera automáticamente a partir de los headings del [`README.md`](README.md):
+El sidebar se genera automáticamente con enlaces a las secciones del [`README.md`](README.md):
 
 ```markdown
-Home
-Contenidos Aprendidos
-Instalación y configuración
-Ejecución
-Estructura del proyecto
-Documentación
-GitHub Actions
-Imagen de la Aplicación
-Autora
-Versión
-Licencia
+* [Home](Home)
+* [Contenidos Aprendidos](Home#contenidos-aprendidos)
+* [Instalación y configuración](Home#instalación-y-configuración)
+* [Ejecución](Home#ejecución)
+* [Estructura del proyecto](Home#estructura-del-proyecto)
+* [Documentación](Home#documentación)
+* [GitHub Actions](Home#github-actions)
+* [Imagen de la Aplicación](Home#imagen-de-la-aplicación)
+* [Autora](Home#autora)
+* [Versión](Home#versión)
+* [Licencia](Home#licencia)
 ```
 
 ---
@@ -197,7 +211,7 @@ Licencia
 
 **Solución:**
 1. Habilitar Wiki en Settings → General → Features
-2. Crear al menos una página desde el navegador
+2. **Crear al menos una página desde el navegador** (ver paso 3.1)
 3. Verificar que el token tiene permiso **`repo`**
 
 ### Error: "Permission denied"
