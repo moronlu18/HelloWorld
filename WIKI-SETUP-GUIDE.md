@@ -1,105 +1,69 @@
-# Guía: Wiki desde README con GitHub Actions
+# Guía: Configuración de Wiki con GitHub Actions
 
 ## Índice
 
 1. [Resumen](#1-resumen)
-2. [Configuración GitHub](#2-configuración-github)
-3. [Workflows](#3-workflows)
-4. [Estructura](#4-estructura)
-5. [Solución de Problemas](#5-solución-de-problemas)
+2. [Prerequisitos](#2-prerequisitos)
+3. [Configuración en GitHub](#3-configuración-en-github)
+4. [Workflow de sincronización](#4-workflow-de-sincronización)
+5. [Estructura generada](#5-estructura-generada)
+6. [Solución de Problemas](#6-solución-de-problemas)
 
 ---
 
 ## 1. Resumen
 
-Automatización que sincroniza el `README.md` con la Wiki de GitHub:
+Automatización que sincroniza el `README.md` con la **Wiki de GitHub**:
 - Crea `Home.md` desde el README
 - Genera `_Sidebar.md` con los headings del README
-- Copia imágenes
+- Copia imágenes de la carpeta `img/`
 
 ---
 
-## 2. Configuración GitHub
+## 2. Prerequisitos
 
-### 2.1. Habilitar Wiki
+- Repositorio en GitHub con el README.md actualizado
+- Permisos de administrador en el repositorio
 
-1. Repositorio → **Settings** → **General**
-2. **Features** → Marcar **Wikis**
-3. Save
+---
 
-### 2.2. Habilitar GitHub Pages
+## 3. Configuración en GitHub
 
-1. **Settings** → **Pages**
-2. Source: **"Deploy from a branch"**
-3. Branch: **main** / Folder: **/docs**
-4. Save
+### 3.1. Habilitar Wiki
 
-### 2.3. Crear Token de Acceso
+1. Ve a tu repositorio en GitHub
+2. **Settings** → **General**
+3. **Features** → Marcar **Wikis**
+4. **Save**
+
+### 3.2. Crear Token de Acceso Personal (PAT)
 
 1. Ve a https://github.com/settings/tokens
 2. **Generate new token (classic)**
 3. Nombre: `Wiki Sync Token`
-4. Permisos: **`repo`**
-5. Generate token → **Copiar token**
+4. Expiración: según tu preferencia
+5. Permisos: **`repo`** (acceso completo al repositorio)
+6. **Generate token**
+7. **Copia el token** (solo se muestra una vez)
 
-### 2.4. Crear Secreto
+### 3.3. Crear Secreto en el Repositorio
 
-1. Repositorio → **Settings** → **Secrets and variables** → **Actions**
-2. **New repository secret**
-3. Nombre: `WIKI_TOKEN`
-4. Valor: token copiado
-5. **Add secret**
+1. Ve a tu repositorio en GitHub
+2. **Settings** → **Secrets and variables** → **Actions**
+3. **New repository secret**
+4. Nombre: `WIKI_TOKEN`
+5. Valor: el token copiado en el paso anterior
+6. **Add secret**
 
 ---
 
-## 3. Workflows
+## 4. Workflow de sincronización
 
-### 3.1. deploy-docs.yml
+El workflow `sync-wiki.yml` se ejecuta automáticamente cuando:
+- Se hace push a `main` con cambios en `README.md`
+- Se ejecuta manualmente desde **Actions**
 
-Despliega documentación Dokka a GitHub Pages.
-
-**Archivo:** `.github/workflows/deploy-docs.yml`
-
-```yaml
-name: Deploy Documentation to GitHub Pages
-
-on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './docs'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
-
-### 3.2. sync-wiki.yml
-
-Sincroniza README con Wiki de GitHub.
+### 4.1. Contenido del workflow
 
 **Archivo:** `.github/workflows/sync-wiki.yml`
 
@@ -174,88 +138,99 @@ ${heading}"
 
 ---
 
-## 4. Estructura
+## 5. Estructura generada
 
-### 4.1. Repositorio
-
-```
-HelloWorldKotlin/
-├── .github/
-│   └── workflows/
-│       ├── deploy-docs.yml
-│       └── sync-wiki.yml
-├── app/
-│   └── build.gradle.kts
-├── docs/
-│   └── (documentación Dokka)
-├── img/
-│   └── aplicacion.png
-├── .nojekyll
-├── README.md
-├── WIKI-SETUP-GUIDE.md
-└── gradlew
-```
-
-### 4.2. Wiki Generada
+### 5.1. Archivos en la Wiki
 
 | Archivo | Contenido |
 |---------|-----------|
-| `Home.md` | README.md completo |
-| `_Sidebar.md` | Headings del README |
-| `img/` | Imágenes |
+| `Home.md` | Contenido completo del README.md |
+| `_Sidebar.md` | Menú lateral con los headings (H1, H2, H3) |
+| `img/` | Imágenes copiadas del repositorio |
+
+### 5.2. Sidebar generado
+
+El sidebar se genera automáticamente a partir de los headings del README:
+
+```markdown
+Home
+Contenidos Aprendidos
+Instalación y configuración
+Ejecución
+Estructura del proyecto
+Documentación
+GitHub Actions
+Imagen de la Aplicación
+Autora
+Versión
+Licencia
+```
 
 ---
 
-## 5. Solución de Problemas
-
-### Error: "Failed to deploy - Jekyll"
-
-**Causa:** GitHub Pages usa Jekyll.
-
-**Solución:**
-1. Verificar que existe `.nojekyll`
-2. Settings → Pages → Source: "Deploy from a branch" → main → /docs
-
-### Error: "Validation Failed (422)"
-
-**Causa:** GitHub Pages no habilitado.
-
-**Solución:**
-1. Settings → Pages
-2. Habilitar y configurar Source
+## 6. Solución de Problemas
 
 ### Error: "WIKI_TOKEN not configured"
 
-**Causa:** Falta el token.
+**Causa:** El secreto `WIKI_TOKEN` no existe o está mal configurado.
 
 **Solución:**
-1. Crear PAT con permiso `repo`
-2. Agregar como secreto `WIKI_TOKEN`
+1. Verificar que el token existe en **Settings → Secrets and variables → Actions**
+2. Verificar que el nombre del secreto es exactamente `WIKI_TOKEN`
+3. Generar un nuevo token si expiró
 
-### Sidebar no aparece
+### Error: "Permission denied"
 
-**Causa:** Archivo corrupto o mal formateado.
+**Causa:** El token no tiene permisos suficientes.
 
 **Solución:**
-1. Deshabilitar y rehabilitar Wiki en Settings
-2. Ejecutar workflow manualmente
+1. Verificar que el token tiene permiso **`repo`**
+2. Generar un nuevo token con los permisos correctos
+
+### Wiki no se actualiza
+
+**Causa:** El workflow no se ejecuta o falla silenciosamente.
+
+**Solución:**
+1. Ve a **Actions** en el repositorio
+2. Busca el workflow **"Sync README to Wiki"**
+3. Revisa los logs del último intento
+4. Ejecuta el workflow manualmente con **"Run workflow"**
+
+### Sidebar muestra contenido incorrecto
+
+**Causa:** El README tiene un formato inesperado.
+
+**Solución:**
+1. Verificar que los headings del README usan `#`, `##` o `###`
+2. No usar headings más profundos (####) para el sidebar
+
+### Imágenes no aparecen en la Wiki
+
+**Causa:** La carpeta `img/` no existe o está vacía.
+
+**Solución:**
+1. Verificar que las imágenes están en `img/`
+2. Verificar que el README referencia las imágenes correctamente
 
 ---
 
 ## Comandos Útiles
 
 ```bash
-# Generar documentación Dokka
-./gradlew dokkaHtml
-
-# Verificar estado
+# Verificar estado del repositorio
 git status
 
-# Ejecutar push
+# Subir cambios del README
+git add README.md
+git commit -m "docs: update README"
 git push origin main
+
+# Ejecutar workflow manualmente
+# → GitHub → Actions → Sync README to Wiki → Run workflow
 ```
 
 ---
 
-**Autor:** Lourdes Rodríguez Morón  
+**Autor:** Lourdes Rodríguez Morón
 **Fecha:** Junio 2026

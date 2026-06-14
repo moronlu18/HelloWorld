@@ -62,7 +62,8 @@ El proyecto incluye dos workflows automatizados:
 - **Archivo:** `.github/workflows/deploy-docs.yml`
 - **Trigger:** Push a `main`
 - **Función:** Despliega la documentación Dokka a GitHub Pages
-- **URL:** https://moronlu18.github.io/HelloWorldKotlin/
+- **URL:** https://moronlu18.github.io/HelloWorld/
+- **Requisito:** Ejecutar `./gradlew dokkaHtml` antes de hacer push
 
 ### Sincronización con Wiki
 - **Archivo:** `.github/workflows/sync-wiki.yml`
@@ -75,11 +76,13 @@ El proyecto incluye dos workflows automatizados:
 
 ### Configuración Requerida
 
-1. **GitHub Pages:** Settings → Pages → Source: "Deploy from a branch" → main → /docs
+1. **GitHub Pages:** Settings → Pages → Source: **"GitHub Actions"**
 2. **Wiki:** Settings → General → Features → Marcar Wikis
 3. **Token:** Crear PAT con permiso `repo` y guardar como secreto `WIKI_TOKEN`
 
-Para más detalles, consulta [WIKI-SETUP-GUIDE.md](WIKI-SETUP-GUIDE.md).
+Para más detalles, consulta:
+- [GITHUB-PAGES-SETUP-GUIDE.md](GITHUB-PAGES-SETUP-GUIDE.md) - Despliegue de documentación Dokka
+- [WIKI-SETUP-GUIDE.md](WIKI-SETUP-GUIDE.md) - Sincronización con Wiki
 
 ## Imagen de la Aplicación
 
