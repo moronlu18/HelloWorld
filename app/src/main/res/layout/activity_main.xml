@@ -1,45 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity"> -->
-
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:background="@color/md_theme_background"
+    android:padding="24dp"
     tools:context=".MainActivity">
 
+    <!-- Título principal -->
     <TextView
-        android:id="@+id/tvMessageStart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/orange"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="@string/tvMessageStartText"
-        android:textAlignment="center"
-        android:textSize="34sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvMessageEnd"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/green"
-        android:text="@string/tvMessageEndText"
-        android:textAlignment="center"
-        android:textSize="34sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btCrash"
-        android:layout_width="match_parent"
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:text="@string/btCrash" />
+        android:layout_marginTop="48dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/app_name"
+        android:textColor="@color/md_theme_primary"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        tools:text="Hola Mundo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <!-- Tarjeta principal -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:cardBackgroundColor="@color/md_theme_surface"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <!-- Mensaje de inicio -->
+            <TextView
+                android:id="@+id/tvMessageStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="Hola Mundo" />
+
+            <!-- Separador decorativo -->
+            <View
+                android:layout_width="60dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/md_theme_secondary" />
+
+            <!-- Mensaje secundario -->
+            <TextView
+                android:id="@+id/tvMessageEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/md_theme_secondary"
+                android:textSize="18sp"
+                tools:text="En este maravilloso día" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Botón de crash -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btCrash"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/md_theme_error"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.05"
+        android:text="@string/btCrash"
+        android:textAllCaps="false"
+        android:textColor="@color/md_theme_onError"
+        android:textSize="16sp"
+        app:cornerRadius="16dp"
+        app:iconGravity="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardMessage" />
+
+    <!-- Texto de pie -->
+    <TextView
+        android:id="@+id/tvFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/author"
+        android:textColor="#9E9E9E"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

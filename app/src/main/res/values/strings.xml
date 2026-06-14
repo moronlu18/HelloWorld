@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Hola Mundo</string>
-    <string name="tvMessageStartText">Hola Mundo</string>
-    <string name="tvMessageEndText">MUY Cruel</string>
-    <string name="messageOptimist">En este maravilloso día</string>
+    <string name="app_name">Primera Aplicación</string>
+    <string name="messagePessimistic">¡Oh no, un error!</string>
+    <string name="messageOptimistic">Hoy será un gran día</string>
     <string name="btCrash">Esto es un fallo</string>
+    <string name="author">Lourdes Rodríguez Morón</string>
 </resources>

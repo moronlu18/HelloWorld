@@ -2,10 +2,9 @@ package com.moronlu18.helloworld
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
 
 /**
  * Actividad principal que muestra dos textos y un botón que lanza una excepción.
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tvMessageStart: TextView
     private lateinit var tvMessageEnd: TextView
-    private lateinit var btCrash: Button
+    private lateinit var btCrash: MaterialButton
 
     /**
      * Se llama cuando se crea la actividad por primera vez.
@@ -73,12 +72,11 @@ class MainActivity : AppCompatActivity() {
         btCrash = findViewById(R.id.btCrash)
 
         message = "Hola Mundo"
-        tvMessageStart.setTextColor(ContextCompat.getColor(this, R.color.white))
-        tvMessageEnd.setText(R.string.messageOptimist)
+        tvMessageStart.text = message
+        tvMessageEnd.setText(R.string.messageOptimistic)
 
-        tvMessageStart.text = getString(R.string.messageOptimist)
         btCrash.setOnClickListener {
-            tvMessageStart.text = getString(R.string.messageOptimist)
+            tvMessageEnd.text = getString(R.string.messagePessimistic)
             throw RuntimeException("Aquí hay un gran error") // Force a crash
         }
 

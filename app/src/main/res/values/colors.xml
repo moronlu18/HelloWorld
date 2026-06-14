@@ -2,6 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="orange">#8AFF5722</color>
-    <color name="green">#7CCDDC39</color>
+
+    <!-- Material3 Color Scheme -->
+    <color name="md_theme_primary">#1565C0</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#BBDEFB</color>
+    <color name="md_theme_onPrimaryContainer">#0D47A1</color>
+    <color name="md_theme_secondary">#00897B</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#B2DFDB</color>
+    <color name="md_theme_background">#FAFAFA</color>
+    <color name="md_theme_surface">#FFFFFF</color>
+    <color name="md_theme_error">#D32F2F</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+
+    <!-- Legacy colors -->
+    <color name="orange">#FF5722</color>
+    <color name="green">#4CAF50</color>
 </resources>
