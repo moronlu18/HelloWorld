@@ -49,15 +49,12 @@ jobs:
             exit 1
           fi
           
-          echo "=== Repository ==="
-          echo "${{ github.repository }}"
-          
-          WIKI_URL="https://x-access-token:${WIKI_TOKEN}@github.com/${{ github.repository }}.wiki.git"
-          echo "=== Wiki URL (hidden token) ==="
-          echo "https://x-access-token:***@github.com/${{ github.repository }}.wiki.git"
+          echo "=== Setting up git ==="
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
           echo "=== Cloning wiki ==="
-          git clone "$WIKI_URL" wiki-repo
+          git clone https://${WIKI_TOKEN}@github.com/${{ github.repository }}.wiki.git wiki-repo
           cd wiki-repo
           
           # Delete everything
@@ -71,8 +68,7 @@ jobs:
           echo "=== Files to upload ==="
           ls -la
           
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "=== Pushing to wiki ==="
           git add .
           git commit -m "docs: update wiki"
           git push
