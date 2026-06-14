@@ -49,8 +49,14 @@ jobs:
             exit 1
           fi
           
-          WIKI_URL="https://x-access-token:${WIKI_TOKEN}@github.com/${{ github.repository }}.wiki.git"
+          echo "=== Repository ==="
+          echo "${{ github.repository }}"
           
+          WIKI_URL="https://x-access-token:${WIKI_TOKEN}@github.com/${{ github.repository }}.wiki.git"
+          echo "=== Wiki URL (hidden token) ==="
+          echo "https://x-access-token:***@github.com/${{ github.repository }}.wiki.git"
+          
+          echo "=== Cloning wiki ==="
           git clone "$WIKI_URL" wiki-repo
           cd wiki-repo
           
