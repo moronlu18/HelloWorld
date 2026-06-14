@@ -34,11 +34,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 
 tasks.dokkaHtml.configure {
-    outputDirectory.set(file("../documentation/html"))
+    outputDirectory.set(file("${rootProject.projectDir}/docs"))
 }
 /*
 tasks.dokkaJavadoc.configure {

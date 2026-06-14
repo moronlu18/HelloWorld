@@ -1,0 +1,9 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.moronlu18.helloworld////PointingToDeclaration/app/com.moronlu18.helloworld/index.html
+$dokka.location:com.moronlu18.helloworld/MainActivity///PointingToDeclaration/app/com.moronlu18.helloworld/-main-activity/index.html
+$dokka.location:com.moronlu18.helloworld/MainActivity/MainActivity/#/PointingToDeclaration/app/com.moronlu18.helloworld/-main-activity/-main-activity.html
+$dokka.location:com.moronlu18.helloworld/MainActivity/getMessage/#/PointingToDeclaration/app/com.moronlu18.helloworld/-main-activity/get-message.html
+$dokka.location:com.moronlu18.helloworld/MainActivity/setMessage/#kotlin.String/PointingToDeclaration/app/com.moronlu18.helloworld/-main-activity/set-message.html
+com.moronlu18.helloworld
+
